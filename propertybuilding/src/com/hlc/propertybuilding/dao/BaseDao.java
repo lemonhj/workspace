@@ -19,9 +19,9 @@ public class BaseDao<T> {
 		entityClass = (Class)params[0];
 	}
 	
-//	public T load(Serializable id){
-//		return sqlSessionTemplate.sele
-//	}
+	public T load(Serializable id){
+		return null;
+	}
 	
 	
 }
