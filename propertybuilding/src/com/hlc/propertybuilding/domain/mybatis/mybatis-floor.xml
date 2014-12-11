@@ -1,87 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.zsj.shoppingCenter.domain.GGoods">
-	<resultMap id="gGoodsResultMap" type="com.zsj.shoppingCenter.domain.GGoods">
-		<result column="id" property="id" jdbcType="INTEGER" />
-		<result column="addTime" property="addtime" jdbcType="TIMESTAMP" />
-		<result column="appvChangeInfo" property="appvchangeinfo" jdbcType="VARCHAR" />
-		<result column="appvDesc" property="appvdesc" jdbcType="VARCHAR" />
-		<result column="appvIntro" property="appvintro" jdbcType="VARCHAR" />
-		<result column="appvName" property="appvname" jdbcType="VARCHAR" />
-		<result column="bestUpdate" property="bestupdate" jdbcType="TIMESTAMP" />
-		<result column="commentCount" property="commentcount" jdbcType="INTEGER" />
-		<result column="datPath" property="datpath" jdbcType="VARCHAR" />
-		<result column="goodsName" property="goodsname" jdbcType="VARCHAR" />
-		<result column="goodsSn" property="goodssn" jdbcType="VARCHAR" />
-		<result column="hotUpdate" property="hotupdate" jdbcType="TIMESTAMP" />
-		<result column="icon" property="icon" jdbcType="VARCHAR" />
-		<result column="isAloneSale" property="isalonesale" jdbcType="VARCHAR" />
-		<result column="isBest" property="isbest" jdbcType="VARCHAR" />
-		<result column="isCheck" property="ischeck" jdbcType="VARCHAR" />
-		<result column="isDelete" property="isdelete" jdbcType="VARCHAR" />
-		<result column="isHot" property="ishot" jdbcType="VARCHAR" />
-		<result column="isNew" property="isnew" jdbcType="VARCHAR" />
-		<result column="isOnSale" property="isonsale" jdbcType="INTEGER" />
-		<result column="lastUpdate" property="lastupdate" jdbcType="TIMESTAMP" />
-		<result column="manufacturer" property="manufacturer" jdbcType="VARCHAR" />
-		<result column="newUpdate" property="newupdate" jdbcType="TIMESTAMP" />
-		<result column="price" property="price" jdbcType="INTEGER" />
-		<result column="pub_Time" property="pubTime" jdbcType="TIMESTAMP" />
-		<result column="size" property="size" jdbcType="INTEGER" />
-		<result column="sortOrder" property="sortorder" jdbcType="VARCHAR" />
-		<result column="sourcePath" property="sourcepath" jdbcType="VARCHAR" />
-		<result column="star" property="star" jdbcType="INTEGER" />
-		<result column="starCount" property="starcount" jdbcType="INTEGER" />
-		<result column="state" property="state" jdbcType="INTEGER" />
-		<result column="updaId" property="updaid" jdbcType="INTEGER" />
-		<result column="updaTime" property="updatime" jdbcType="TIMESTAMP" />
+<mapper namespace="com.hlc.propertybuilding.domain.TBuilding">
+	<resultMap id="building" type="com.hlc.propertybuilding.domain.TBuilding">
+		<result column="buil_id" property="builId" jdbcType="INTEGER" />
+		<result column="buil_order" property="builOrder" jdbcType="INTEGER" />
+		<result column="buil_no" property="builNo" jdbcType="VARCHAR" />
+		<result column="buil_name" property="builName" jdbcType="VARCHAR" />
+		<result column="buil_create" property="builCreate" jdbcType="VARCHAR" />
+		<result column="buil_memo" property="builMemo" jdbcType="VARCHAR" />
 	</resultMap>
 
 	<!-- 表名 -->
 	<sql id="tableNameSql">
-		g_goods 
+		t_building 
 	</sql>
 
 	<!-- 用于select查询、insert的公用抽取的列 -->
 	<sql id="commonSelectColumnsPrefix">
-        	id ,
-        	addTime ,
-        	appvChangeInfo ,
-        	appvDesc ,
-        	appvIntro ,
-        	appvName ,
-        	bestUpdate ,
-        	commentCount ,
-        	datPath ,
-        	goodsName ,
-        	goodsSn ,
-        	hotUpdate ,
-        	icon ,
-        	isAloneSale ,
-        	isBest ,
-        	isCheck ,
-        	isDelete ,
-        	isHot ,
-        	isNew ,
-        	isOnSale ,
-        	lastUpdate ,
-        	manufacturer ,
-        	newUpdate ,
-        	price ,
-        	pub_Time ,
-        	size ,
-        	sortOrder ,
-        	sourcePath ,
-        	star ,
-        	starCount ,
-        	state ,
-        	updaId ,
-        	updaTime 
+        	buil_id ,
+        	buil_order ,
+        	buil_no ,
+        	buil_name ,
+        	buil_create
 	</sql>
 
 	<!-- 按主键查找条件语句 -->
 	<sql id="conditionOnlyId">
-		id = #{id}
+		buil_id = #{builId}
 	</sql>
 	
 	<sql id="mainSql">
