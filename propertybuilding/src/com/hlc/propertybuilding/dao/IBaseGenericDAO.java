@@ -36,7 +36,7 @@ public interface IBaseGenericDAO<T, ID extends Serializable> {
      * @param id 指定的唯一标识符
      * @return 指定的唯一标识符对应的持久化对象，如果没有对应的持久化对象，则返回null。
      */
-	public T getById(String id);
+	public T getById(Integer id);
 
     /**
      * 删除指定的唯一标识符对应的持久化对象

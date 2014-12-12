@@ -121,7 +121,7 @@ implements IBaseGenericDAO<T, ID> {
 	 * @see com.harmony.framework.dao.mybatis.IBaseGenericDAO#getById(java.lang.String)
 	 */
 	@SuppressWarnings("unchecked")
-	public T getById(String id) {
+	public T getById(Integer id) {
 		return (T) this.getSqlSession().selectOne(
 				getSqlName(SQL_GETBYID), id);
 	}

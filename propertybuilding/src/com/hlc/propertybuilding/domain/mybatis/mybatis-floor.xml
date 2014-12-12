@@ -1,41 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.hlc.propertybuilding.domain.TBuilding">
-	<resultMap id="building" type="com.hlc.propertybuilding.domain.TBuilding">
-		<result column="buil_id" property="builId" jdbcType="INTEGER" />
-		<result column="buil_order" property="builOrder" jdbcType="INTEGER" />
-		<result column="buil_no" property="builNo" jdbcType="VARCHAR" />
-		<result column="buil_name" property="builName" jdbcType="VARCHAR" />
-		<result column="buil_create" property="builCreate" jdbcType="VARCHAR" />
-		<result column="buil_memo" property="builMemo" jdbcType="VARCHAR" />
+<mapper namespace="com.hlc.propertybuilding.domain.TFloor">
+	<resultMap id="floor" type="com.hlc.propertybuilding.domain.TFloor">
+		<result column="floo_id" property="flooId" jdbcType="INTEGER" />
+		<result column="floo_building" property="flooBuilding" jdbcType="INTEGER" />
+		<result column="floo_order" property="flooOrder" jdbcType="VARCHAR" />
+		<result column="floo_no" property="flooNo" jdbcType="VARCHAR" />
+		<result column="floo_type" property="flooType" jdbcType="VARCHAR" />
+		<result column="floo_height" property="flooHeight" jdbcType="VARCHAR" />
 	</resultMap>
 
 	<!-- 表名 -->
 	<sql id="tableNameSql">
-		t_building 
+		t_floor 
 	</sql>
 
 	<!-- 用于select查询、insert的公用抽取的列 -->
 	<sql id="commonSelectColumnsPrefix">
-        	buil_id ,
-        	buil_order ,
-        	buil_no ,
-        	buil_name ,
-        	buil_create
+        	floo_id ,
+        	floo_building ,
+        	floo_order ,
+        	floo_no ,
+        	floo_type,
+        	floo_height
 	</sql>
 
 	<!-- 按主键查找条件语句 -->
 	<sql id="conditionOnlyId">
-		buil_id = #{builId}
+		floo_id = #{flooId}
 	</sql>
 	
 	<sql id="mainSql">
 		SELECT
 			<include refid="commonSelectColumnsPrefix"/>
 		FROM
-			<include refid="tableNameSql"/> p
+			<include refid="tableNameSql"/> 
 	</sql>
-
+<!-- 
 	<sql id="varSql">
 		<where>
 			<if test="appvchangeinfo!=null and appvchangeinfo!=''">and p.appvChangeInfo like #{appvchangeinfo} </if>
@@ -68,12 +69,12 @@
  			</if>
  		</if>
 	</select>
-
-	<select id="getById" parameterType="String" resultMap="gGoodsResultMap">
+ -->
+	<select id="getById" parameterType="INTEGER" resultMap="floor">
 		<include refid="mainSql"/>
 		where <include refid="conditionOnlyId"/>
 	</select>
-
+<!-- 
 	<select id="getCountBy" parameterType="java.util.Map" resultType="INTEGER">
 		SELECT
 			COUNT(*) AS C
@@ -86,93 +87,36 @@
 		<include refid="mainSql"/>
 		<include refid="varSql"/>
 	</select>
-
-	<insert id="save" parameterType="com.zsj.shoppingCenter.domain.GGoods">
+ -->
+	<insert id="save" parameterType="com.hlc.propertybuilding.domain.TFloor">
 		insert into
 			<include refid="tableNameSql"/>
-		(
-			<include refid="commonSelectColumnsPrefix"/>
-		)
+		(floo_building,floo_order,floo_no,floo_type,floo_height)
 		values
-		(
-			#{id, jdbcType=INTEGER} ,
-			#{addtime, jdbcType=TIMESTAMP} ,
-			#{appvchangeinfo, jdbcType=VARCHAR} ,
-			#{appvdesc, jdbcType=VARCHAR} ,
-			#{appvintro, jdbcType=VARCHAR} ,
-			#{appvname, jdbcType=VARCHAR} ,
-			#{bestupdate, jdbcType=TIMESTAMP} ,
-			#{commentcount, jdbcType=INTEGER} ,
-			#{datpath, jdbcType=VARCHAR} ,
-			#{goodsname, jdbcType=VARCHAR} ,
-			#{goodssn, jdbcType=VARCHAR} ,
-			#{hotupdate, jdbcType=TIMESTAMP} ,
-			#{icon, jdbcType=VARCHAR} ,
-			#{isalonesale, jdbcType=VARCHAR} ,
-			#{isbest, jdbcType=VARCHAR} ,
-			#{ischeck, jdbcType=VARCHAR} ,
-			#{isdelete, jdbcType=VARCHAR} ,
-			#{ishot, jdbcType=VARCHAR} ,
-			#{isnew, jdbcType=VARCHAR} ,
-			#{isonsale, jdbcType=INTEGER} ,
-			#{lastupdate, jdbcType=TIMESTAMP} ,
-			#{manufacturer, jdbcType=VARCHAR} ,
-			#{newupdate, jdbcType=TIMESTAMP} ,
-			#{price, jdbcType=INTEGER} ,
-			#{pubTime, jdbcType=TIMESTAMP} ,
-			#{size, jdbcType=INTEGER} ,
-			#{sortorder, jdbcType=VARCHAR} ,
-			#{sourcepath, jdbcType=VARCHAR} ,
-			#{star, jdbcType=INTEGER} ,
-			#{starcount, jdbcType=INTEGER} ,
-			#{state, jdbcType=INTEGER} ,
-			#{updaid, jdbcType=INTEGER} ,
-			#{updatime, jdbcType=TIMESTAMP} 
+		( 
+			#{flooBuilding},
+			#{flooOrder},
+			#{flooNo},
+			#{flooType},
+			#{flooHeight}
 		)
 	</insert>
 
-	<update id="update" parameterType="com.zsj.shoppingCenter.domain.GGoods">
+	<update id="update" parameterType="com.hlc.propertybuilding.domain.TFloor">
 		update
 			<include refid="tableNameSql"/>
 		set
-			addTime = #{addtime, jdbcType=TIMESTAMP} ,
-			appvChangeInfo = #{appvchangeinfo, jdbcType=VARCHAR} ,
-			appvDesc = #{appvdesc, jdbcType=VARCHAR} ,
-			appvIntro = #{appvintro, jdbcType=VARCHAR} ,
-			appvName = #{appvname, jdbcType=VARCHAR} ,
-			bestUpdate = #{bestupdate, jdbcType=TIMESTAMP} ,
-			commentCount = #{commentcount, jdbcType=INTEGER} ,
-			datPath = #{datpath, jdbcType=VARCHAR} ,
-			goodsName = #{goodsname, jdbcType=VARCHAR} ,
-			goodsSn = #{goodssn, jdbcType=VARCHAR} ,
-			hotUpdate = #{hotupdate, jdbcType=TIMESTAMP} ,
-			icon = #{icon, jdbcType=VARCHAR} ,
-			isAloneSale = #{isalonesale, jdbcType=VARCHAR} ,
-			isBest = #{isbest, jdbcType=VARCHAR} ,
-			isCheck = #{ischeck, jdbcType=VARCHAR} ,
-			isDelete = #{isdelete, jdbcType=VARCHAR} ,
-			isHot = #{ishot, jdbcType=VARCHAR} ,
-			isNew = #{isnew, jdbcType=VARCHAR} ,
-			isOnSale = #{isonsale, jdbcType=INTEGER} ,
-			lastUpdate = #{lastupdate, jdbcType=TIMESTAMP} ,
-			manufacturer = #{manufacturer, jdbcType=VARCHAR} ,
-			newUpdate = #{newupdate, jdbcType=TIMESTAMP} ,
-			price = #{price, jdbcType=INTEGER} ,
-			pub_Time = #{pubTime, jdbcType=TIMESTAMP} ,
-			size = #{size, jdbcType=INTEGER} ,
-			sortOrder = #{sortorder, jdbcType=VARCHAR} ,
-			sourcePath = #{sourcepath, jdbcType=VARCHAR} ,
-			star = #{star, jdbcType=INTEGER} ,
-			starCount = #{starcount, jdbcType=INTEGER} ,
-			state = #{state, jdbcType=INTEGER} ,
-			updaId = #{updaid, jdbcType=INTEGER} ,
-			updaTime = #{updatime, jdbcType=TIMESTAMP} 
+			buil_order = #{flooBuilding},
+			buil_no = #{flooOrder},
+			buil_name = #{flooNo},
+			buil_create = #{flooType},
+			buil_memo = #{flooHeight}
 		where <include refid="conditionOnlyId"/>
 	</update>
 
 	<delete id="deleteByIds" parameterType="Object[]">
 		delete from <include refid="tableNameSql"/> 
-		where id in <foreach index="index" item="item" collection="array" separator="," open="(" close=")" >#{item}</foreach>
+		where buil_id in <foreach index="index" item="item" collection="array" separator="," open="(" close=")" >#{item}</foreach>
 	</delete>
 
 	<delete id="deleteById" parameterType="Object">

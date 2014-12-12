@@ -56,11 +56,12 @@
         <property name="mapperInterface" value="com.hoo.mapper.CompanyMapper" />
         <property name="sqlSessionFactory" ref="sqlSessionFactory" /> 
     </bean>
-     --> 	
+    	 --> 
     
-    <!-- 通过扫描的模式，扫描目录在com/hoo/mapper目录下，所有的mapper都继承SqlMapper接口的接口， 这样一个bean就可以了 -->
+    <!-- 通过扫描的模式，扫描目录在com/hoo/mapper目录下，所有的mapper都继承SqlMapper接口的接口， 这样一个bean就可以了
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <property name="basePackage" value="com.hoo.mapper"/>
         <property name="markerInterface" value="com.hoo.mapper.SqlMapper"/>
     </bean>
+     -->
 </beans>
