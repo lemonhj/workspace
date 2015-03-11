@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd ">
+	<!-- 
+		@File:applicationContext-basic.xml
+		@Desc:spring公共事务Bean
+		@Date:2014-09-15
+		@Author：yanglh
+		@Version:V1.0
+		@Copyright(c) 2014, Guizhou HOMNICEN Group. All rights reserved.
+	 -->
+	
+	
+	
+	<!-- 下面是例子 把相关的service方法等暴露给DWR，在前台调用 -->
+	<!-- <bean id="monthService" class="com.honglicheng.dev.test.MonthService"></bean>
+	<bean id="testDwrService" class="com.honglicheng.dev.test.TestDwrService"></bean>
+	<bean id="testBo" class="com.honglicheng.dev.test.TestBo"></bean> -->
+</beans>

@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dwr="http://www.directwebremoting.org/schema/spring-dwr"
+	xsi:schemaLocation="http://www.springframework.org/schema/aop   
+			http://www.springframework.org/schema/aop/spring-aop-3.0.xsd   
+			http://www.springframework.org/schema/beans   
+			http://www.springframework.org/schema/beans/spring-beans-3.0.xsd   
+			http://www.springframework.org/schema/context   
+			http://www.springframework.org/schema/context/spring-context-3.0.xsd   
+			http://www.springframework.org/schema/mvc   
+			http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd   
+			http://www.springframework.org/schema/tx   
+			http://www.springframework.org/schema/tx/spring-tx-3.0.xsd  
+			http://www.directwebremoting.org/schema/spring-dwr      
+			http://www.directwebremoting.org/schema/spring-dwr-3.0.xsd"
+	default-lazy-init="true" default-autowire="byName">
+	<!-- 
+		@File:applicationContext-basic.xml
+		@Desc:spring链接数据库等
+		@Date:2014-09-15
+		@Author：yanglh
+		@Version:V1.0
+		@Copyright(c) 2014, Guizhou HOMNICEN Group. All rights reserved.
+	 -->
+	<!-- 使用 annotation -->
+	<context:annotation-config />
+
+	<!--
+		使用 annotation 自动注册bean,并检查@Controller, @Service, @Repository注解已被注入
+	-->
+	<!-- 使用annotation 自动注册bean,并保证@Required,@Autowired的属性被注入 -->  
+	<context:component-scan base-package="*" />
+
+	<!-- hibernate属性配置 -->
+	<context:property-placeholder location="classpath:jdbc.properties"/>
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+		<property name="driverClass" value="${jdbc.connection.driverclass}" />
+        <property name="jdbcUrl" value="${jdbc.connection.url}" />
+        <property name="user" value="${jdbc.connection.username}" />
+        <property name="password" value="${jdbc.connection.password}" />
+        
+        <property name="maxPoolSize" value="${c3p0.pool.size.max}" />
+        <property name="minPoolSize" value="${c3p0.pool.size.min}" />
+        <property name="maxIdleTime" value="${c3p0.pool.size.maxTime}" />
+        <property name="initialPoolSize" value="${c3p0.pool.size.ini}" />
+        <property name="acquireIncrement" value="${c3p0.pool.size.increment}" />
+        <!--每60秒检查所有连接池中的空闲连接。Default: 0 -->  
+		<property name="idleConnectionTestPeriod" value="${c3p0.idleConnectionTestPeriod}" />  
+        <!--定义在从数据库获取新连接失败后重复尝试的次数。Default: 30 -->  
+		<property name="acquireRetryAttempts" value="${c3p0.acquireRetryAttempts}" />  
+		<property name="breakAfterAcquireFailure" value="${c3p0.breakAfterAcquireFailure}" />  
+		<property name="testConnectionOnCheckout" value="${c3p0.testConnectionOnCheckout}" />
+	</bean>
+	<!-- 会话工厂,spring整合hibernate的核心入口 -->
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
+                <prop key="hibernate.dialect">${hibernate.dialect}</prop>
+                <prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl.auto}</prop>
+            </props>
+        </property>
+        <!-- 映射目录位置集 -->
+        <property name="mappingDirectoryLocations">
+            <list>
+                <value>classpath:com/honglicheng/dev/estate/model</value>
+                <value>classpath:com/honglicheng/dev/sys/model</value>
+            </list>
+        </property>
+    </bean>
+
+
+ <!-- 配置hibernate事务管理器,在service层面上实现事务管理,而且达到平台无关性 -->
+    <bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+    
+    
+
+
+
+
+	<bean id="txProxyTemplate" abstract="true"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager" ref="transactionManager" />
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED,-BusinessException</prop>
+			</props>
+		</property>
+	</bean>
+
+	<!-- 配置事务的传播特性 -->
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="add*" propagation="REQUIRED" />
+			<tx:method name="delete*" propagation="REQUIRED" />
+			<tx:method name="modify*" propagation="REQUIRED" />
+			<tx:method name="save*" propagation="REQUIRED" isolation="DEFAULT"/>
+            <tx:method name="update*" propagation="REQUIRED" isolation="DEFAULT"/>
+            <tx:method name="delete*" propagation="REQUIRED" isolation="DEFAULT"/>
+            <tx:method name="batch*" propagation="REQUIRED" isolation="DEFAULT"/>
+            <tx:method name="clear*" propagation="REQUIRED" isolation="DEFAULT"/>
+            
+            <tx:method name="load*" propagation="REQUIRED" isolation="DEFAULT" read-only="true"/>
+            <tx:method name="get*" propagation="REQUIRED" isolation="DEFAULT" read-only="true"/>
+            <tx:method name="find*" propagation="REQUIRED" isolation="DEFAULT" read-only="true"/>
+            <tx:method name="is*" propagation="REQUIRED" isolation="DEFAULT" read-only="true"/>
+			
+			   <tx:method name="*" propagation="REQUIRED" isolation="DEFAULT"/>
+		</tx:attributes>
+	</tx:advice>
+
+	<!-- 那些类的哪些方法参与事务 -->
+	<aop:config>
+		 <aop:pointcut id="txPointcut" expression="execution(* *..*Service.*(..))"/>
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="txPointcut" />
+	</aop:config>
+
+	<bean id="baseTransactionProxy"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean"
+		abstract="true">
+		<property name="transactionManager">
+			<ref bean="transactionManager" />
+		</property>
+	</bean>
+	<!-- 配置 jdbc模板 -->     
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+</beans>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping >
+    <class name="com.honglicheng.dev.sys.model.SysMenu" table="base_sys_menu" catalog="hlc_estate">
+        <id name="menuId" column="menuId" type="java.lang.Integer">
+            <generator class="identity" />
+        </id>
+        <property name="menuIcon" column="menuIcon" type="java.lang.String" length="100" />
+        <property name="menuName" column="menuName" type="java.lang.String" length="50" />
+        <property name="parentMId" column="parentMId" type="java.lang.Integer"/>
+        <property name="menuUrl" column="menuUrl" type="java.lang.String" length="150" />
+        <property name="menuDesc" column="menuDesc" type="java.lang.String" length="150" />
+    </class>
+</hibernate-mapping>

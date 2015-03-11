@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE dwr PUBLIC     "-//GetAhead Limited//DTD Direct Web Remoting 2.0//EN"    "http://getahead.org/dwr/dwr20.dtd">
+<dwr>
+	<allow>
+		<!-- 
+			@File:dwr-basic.xml
+			@Desc:dwr中属于basic的配置文件
+			@Date:2014-09-15
+			@Author：yanglh
+			@Version:V1.0
+			@Copyright(c) 2014, Guizhou HOMNICEN Group. All rights reserved.
+		 -->
+		 
+		<!-- 建立JS对象，将目标对象的方法转换成JS对象的方法  下面是例子 -->
+		<!-- <create javascript="helloSrv" creator="new">
+			<param name="class" value="com.honglicheng.dev.test.TestDwrService"></param>
+		</create> -->
+		<!-- 从Spring中获取Java对象  下面是例子-->
+		<!--<create javascript="monthService" creator="spring">
+			<param name="beanName" value="monthService"></param>-->
+			<!-- 禁止执行方法deleteDep-->
+		<!--	<exclude method="deleteDept" />
+		</create>-->
+
+		
+		<!-- 系统通用模块DWR -->
+		<!-- 建立JS对象，将目标对象的方法转换成JS对象的方法  -->
+		<create javascript="BaseDao" creator="spring" scope="page">
+			<param name="beanName" value="BaseDao"></param>
+		</create>
+		
+		<create javascript="IBaseDao" creator="spring" scope="page">
+			<param name="beanName" value="IBaseDao"></param>
+		</create>
+		
+		<create creator="spring" javascript="appMgm" scope="page">
+			<param name="beanName" value="applicationMgm" />
+			<!-- 要执行的执行方法， 暴露给DWR的方法-->
+			<include method="getCodeValue"></include>
+			<include method="getCodeValueForContractSort"></include>
+			<include method="getTableLable"></include>
+		</create>
+
+		
+		<create creator="spring" javascript="baseMgm" scope="page">
+			<param name="beanName" value="baseMgm" />					
+		</create>	
+
+		<!-- 指定针对于特定对象的转换器 -->
+		<convert match="com.honglicheng.dev.basic.*" converter="bean"></convert>
+		<convert match="java.lang.Throwable" converter="bean">
+			<param name="include" value="message"></param>
+		</convert>
+	</allow>
+	
+</dwr>

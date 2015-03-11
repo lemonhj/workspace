@@ -1,0 +1,14 @@
+@CHARSET "UTF-8";
+#css3menu li {
+	float: left;
+	list-style-type: none;
+}
+
+#css3menu li a {
+	color: #fff;
+	padding-right: 20px;
+}
+
+#css3menu li a.active {
+	color: yellow;
+}

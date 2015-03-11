@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping >
+    <class name="com.honglicheng.dev.sys.model.security.Role" table="base_sys_roles">
+        <id name="id" column="id" type="integer">
+            <generator class="identity" />
+        </id>
+        <property name="roleName" column="rolename" type="string" length="50" />
+        <property name="roleDesc" column="roledesc" type="string" length="200" />
+        <property name="roleValue" column="rolevalue" type="string" length="50" />
+        <property name="commIds" column="commIds" type="string" length="200" />
+        <property name="operator" column="operator" type="integer"/>
+        <!-- 映射role和right之间的多对多关联关系 -->
+        <set name="rights" table="base_sys_role_right_link" lazy="false" fetch="join">
+            <key column="roleid" />
+            <many-to-many class="com.honglicheng.dev.sys.model.security.Right" column="rightid" />
+        </set>
+        <!-- 映射role和menu之间的多对多关联关系 -->
+        <set name="sysMenus"  table="base_sys_role_menu_link" lazy="false"  fetch="join" cascade="all" inverse="false">
+            <key column="roleid" not-null="true"/>
+            <many-to-many class="com.honglicheng.dev.sys.model.SysMenu" column="menuId" />
+        </set>
+    </class>
+</hibernate-mapping>

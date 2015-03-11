@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "dtd/spring-beans-2.0.dtd">
+<beans>
+	<!-- 
+		@File:applicationContext.xml
+		@Desc:把所有的spring配置文件放置在一起
+		@Date:2014-09-15
+		@Author：yanglh
+		@Version:V1.0
+		@Copyright(c) 2014, Guizhou HOMNICEN Group. All rights reserved.
+	 -->
+	<!-- 包含 其他的spring配置文件 ，数据库连接包含在前面，其他的顺序可换，根据需求可往里面加spring配置文件-->
+	<import resource="applicationContext-hibernate.xml" />
+</beans>

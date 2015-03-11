@@ -1,0 +1,74 @@
+<?xml version="1.0"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1.7//EN" "http://struts.apache.org/dtds/struts-2.1.7.dtd">
+<struts>
+    <package name="naviActionspgk" extends="json-default,struts-default">
+    	<interceptors>
+			<!-- 自定义拦截器 -->
+			<interceptor name="catchUrlInterceptor" class="com.honglicheng.dev.sys.contral.interceptors.CatchUrlInterceptor">
+                <!-- 配置拦截器阀门 -->
+                <param name="enable">true</param>
+            </interceptor>
+			<interceptor name="loginInterceptor" class="com.honglicheng.dev.sys.contral.interceptors.LoginInterceptor"></interceptor>
+			<!-- 自定义拦截栈 -->
+			<interceptor-stack name="loginStack">
+				<interceptor-ref name="catchUrlInterceptor" />
+				<interceptor-ref name="loginInterceptor"></interceptor-ref>
+				<interceptor-ref name="defaultStack"></interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+		
+		<!-- 配置默认栈 -->
+		<default-interceptor-ref name="loginStack"/>
+		
+		<!-- 定义全局结果 -->
+		<global-results>
+			<result name="login">/index.jsp</result>
+			<result name="temp">WEB-INF/temp.jsp</result>
+		</global-results>
+    
+    	<!-- 登录action -->
+        <action name="loginAction" class="com.honglicheng.dev.sys.contral.action.LoginAction" method="login">
+      		<!-- 定义逻辑视图和物理资源之间的映射 -->
+      		<result name="success">WEB-INF/main.jsp</result>
+      		<result name="error">index.jsp</result>
+      		<result name="input">index.jsp</result>
+		</action>
+        
+        <!-- 导航action -->
+        <action name="naviAction_*" class="com.honglicheng.dev.sys.contral.action.NavigateAction" method="{1}">
+            <result name="logout">/index.jsp</result>
+            <result name="floor_basic_mgr">/WEB-INF/floor_basic_mgr/floor.basic.mgr.jsp</result>
+            <result name="floor_basic_mgr_addorupdata">/WEB-INF/floor_basic_mgr/floor.basic.mgr.addorupdata.jsp</result>
+            <result name="formats_type">/WEB-INF/formats_type/formats.type.jsp</result>
+            <result name="formats_type_addorupdata">/WEB-INF/formats_type/formats.type.addorupdate.jsp</result>
+        	<result name="floor_yt">/WEB-INF/floor_ytbb/floor_ytbb.jsp</result>
+        	<result name="floor_yz">/WEB-INF/flooryzinfo/floorinfoyz.jsp</result>
+        	<result name="floorsd">/WEB-INF/floor_sd/floorsd.jsp</result>
+        	<result name="floor_basic_mgr_addroom">/WEB-INF/floor_basic_mgr/floor.basic.mgr.addroom.jsp</result>
+        	<result name="tree_edit">/WEB-INF/treeEdit/treeEdit.jsp</result>
+        	<result name="sys_rights_edit">/WEB-INF/sys_edit/sys.rights.edit.jsp</result>
+        	<result name="sys_roles_edit">/WEB-INF/sys_edit/sys.roles.edit.jsp</result>
+        	<result name="sys_users_mgmt">/WEB-INF/sys_edit/sys.users.mgmt.jsp</result>
+        	<result name="addOrUpdateRights">/WEB-INF/sys_edit/addOrUpdateRights.jsp</result>
+        	<result name="addOrUpdateRoles">/WEB-INF/sys_edit/addOrUpdateRoles.jsp</result>
+        	<result name="sysMenu_edit">/WEB-INF/sys_edit/sysMenu.jsp</result>
+        </action>
+        
+        <action name="SysRightsAction_*" class="com.honglicheng.dev.sys.contral.action.SysRightsAction" method="{1}">
+             <result name="success" type="json">
+             </result>
+        </action>
+        <action name="SysRolesAction_*" class="com.honglicheng.dev.sys.contral.action.SysRolesAction" method="{1}">
+             <result name="success" type="json">
+             </result>
+        </action>
+        <action name="UserAuthorizeAction_*" class="com.honglicheng.dev.sys.contral.action.UserAuthorizeAction" method="{1}">
+             <result name="success" type="json">
+             </result>
+        </action>
+        <action name="SysMenuAction_*" class="com.honglicheng.dev.sys.contral.action.SysMenuAction" method="{1}">
+             <result name="success" type="json">
+             </result>
+        </action>
+    </package>
+</struts>
