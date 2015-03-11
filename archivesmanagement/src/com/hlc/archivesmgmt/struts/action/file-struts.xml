@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1.7//EN" "http://struts.apache.org/dtds/struts-2.1.7.dtd">
+<struts>
+    
+    <package name="fileActionspgk" extends="struts-default">
+    
+    	<action name="uploadFile" class="com.hlc.archivesmgmt.struts.action.UploadFileAction">  
+            <param name="savePath">/upload</param>  
+            <result name="success">upload.jsp</result>  
+        </action>  
+        
+        <!-- 下载action -->
+		<action name="DownloadAction" class="com.hlc.archivesmgmt.struts.action.DownloadAction">
+           <result type="stream">
+              <param name="contentType">application/octet-stream;charset=UTF-8</param>
+              <param name="inputName">inputStream</param>
+              <param name="contentDisposition">attachment;filename="${fileName}"</param>
+              <param name="bufferSize">4096</param>
+           </result>
+        </action>
+        
+        <!-- 导出Excel -->
+        <action name="Excel" class="com.hlc.archivesmgmt.struts.action.ExcelAction">  
+            <result name="excel" type="stream">  
+                <param name="contentType">  
+                    application/vnd.ms-excel  
+                </param>  
+                <param name="inputName">excelStream</param>  
+                <param name="contentDisposition">  
+                    filename="content.xls"  
+                </param>  
+                <param name="bufferSize">1024</param>  
+            </result>  
+        </action>  
+    </package>
+</struts>

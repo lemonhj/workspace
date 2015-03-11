@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.hlc.archivesmgmt.entity">
+    <class name="Archive" table="busi_archive" lazy="true">
+        <id name="archiveId" column="archiveId" type="integer">
+            <generator class="identity" />
+        </id>
+        <property name="directoryId" column="directoryId" type="string" length="30"/>
+        <property name="archivedYear" column="archivedYear" type="string" length="10" />
+        <property name="categoryCode" column="categoryCode" type="string" length="20" />
+        <property name="retentionPeriod" column="retentionPeriod" type="string" length="20" />
+        <property name="remarks" column="remarks" type="string" length="200" />
+        <many-to-one lazy="false" fetch="join" name="archivesCategory" column="categoryId" class="ArchivesCategory"  />
+        <many-to-one lazy="false" fetch="join" name="archivesLocation" column="locationId" class="ArchivesLocation"/>
+        
+    </class>
+</hibernate-mapping>

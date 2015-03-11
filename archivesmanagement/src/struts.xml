@@ -1,0 +1,82 @@
+<?xml version="1.0"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1.7//EN" "http://struts.apache.org/dtds/struts-2.1.7.dtd">
+<struts>
+    <!-- 设置开发模式,可以重新加载struts.xml和国际化资源文件 -->
+    <constant name="struts.devMode" value="true" />
+    <!-- 设置struts主题 -->
+    <constant name="struts.ui.theme" value="simple" />
+    <include file="com/hlc/archivesmgmt/struts/action/file-struts.xml"></include>
+    <include file="com/hlc/archivesmgmt/struts/action/navi-struts.xml"></include>
+    
+    <package name="ArchivesMgmtpgk" extends="json-default,struts-default">
+        <interceptors>
+            <!-- 自定义拦截器 -->
+            <interceptor name="loginInterceptor" class="com.hlc.archivesmgmt.struts.interceptor.LoginInterceptor" />
+            <!-- 自定义拦截器栈 -->
+            <interceptor-stack name="loginStack">
+                <interceptor-ref name="loginInterceptor" />
+                <interceptor-ref name="defaultStack" />
+            </interceptor-stack>
+        </interceptors>
+        
+        <!-- 配置默认栈 -->
+        <default-interceptor-ref name="loginStack" />
+        
+        <!-- 定义全局结果 -->
+        <global-results>
+            <result name="login">/index.jsp</result>
+        </global-results>
+        
+        
+        
+          <!-- 获取存放管理树形action -->
+        <action name="ArchiveLocationAction_*" class="com.hlc.archivesmgmt.struts.action.ArchiveLocationAction" method="{1}">
+             <result name="success" type="json">
+             </result>
+        </action>
+        
+         <!-- 获取树形action -->
+        <action name="InitZtreeAction_*" class="com.hlc.archivesmgmt.struts.action.InitZtreeAction" method="{1}">
+             <result type="json">
+             </result>
+        </action>
+        
+        <!-- 档案类型action -->
+
+        <action name="ArchiveCateAction_*" class="com.hlc.archivesmgmt.struts.action.ArchivalCateAction" method="{1}">
+			 <result type="json"> 
+             </result>
+		</action>
+		
+        <!-- 档案action -->
+        <action name="ArchivalAction_*" class="com.hlc.archivesmgmt.struts.action.ArchivalAction" method="{1}">
+			 <result type="json"> 
+             </result>
+		</action>
+		
+        <!-- 档案文件action -->
+        <action name="ArchivalFileAction_*" class="com.hlc.archivesmgmt.struts.action.ArchivalFileAction" method="{1}">
+			 <result type="json"> 
+			 	<param name="contentType">text/html</param>
+             </result>
+		</action>
+		
+		 <!-- 下载文件action -->
+        <action name="StoreFileAction" class="com.hlc.archivesmgmt.struts.action.StoreFileAction" method="downloadFile">
+			 <result  name="success" type="redirect">DownloadAction.action?fileName=1.txt </result> 
+		</action>
+		
+		 <!-- 删除文件action -->
+        <action name="StoreFileAction" class="com.hlc.archivesmgmt.struts.action.StoreFileAction" method="delStoreFile">
+			 <result type="json"> 
+             </result> 
+		</action>
+		
+        <!-- 读取上传文件action -->
+        <action name="StoreFileAction" class="com.hlc.archivesmgmt.struts.action.StoreFileAction" method="loadStoreFile">
+			 <result type="json"> 
+             </result>
+		</action>
+		
+    </package>
+</struts>

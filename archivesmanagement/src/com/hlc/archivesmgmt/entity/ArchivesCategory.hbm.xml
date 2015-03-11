@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.hlc.archivesmgmt.entity">
+    <class name="com.hlc.archivesmgmt.entity.ArchivesCategory" table="busi_archives_category" lazy="true">
+        <id name="categoryId" column="categoryId" type="integer">
+            <generator class="identity" />
+        </id>
+        <property name="categoryName" column="categoryName" type="string" length="20" />
+        <property name="parentId" column="parentId" type="integer"/>
+        <property name="categoryView" column="categoryView" type="integer"/>
+        <property name="createTime" column="createTime" type="date"/>
+        <property name="categoryCode" column="categoryCode" type="string" length="20" />
+
+       
+    </class>
+  	<sql-query name="getChildList">
+	  	<return-scalar column="categoryId" type="integer" />
+	   	 call getChildList(?)
+  	</sql-query>
+    
+</hibernate-mapping>

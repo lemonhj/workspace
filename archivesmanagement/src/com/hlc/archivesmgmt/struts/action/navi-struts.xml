@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1.7//EN" "http://struts.apache.org/dtds/struts-2.1.7.dtd">
+<struts>
+    
+    <package name="naviActionspgk" extends="struts-default">
+    
+    	<interceptors>
+            <!-- 自定义拦截器 -->
+            <interceptor name="loginInterceptor" class="com.hlc.archivesmgmt.struts.interceptor.LoginInterceptor" />
+            <!-- 自定义拦截器栈 -->
+            <interceptor-stack name="loginStack">
+                <interceptor-ref name="loginInterceptor" />
+                <interceptor-ref name="defaultStack" />
+            </interceptor-stack>
+        </interceptors>
+    
+     	<!-- 配置默认栈 -->
+        <default-interceptor-ref name="loginStack" />
+        
+          <!-- 定义全局结果 -->
+        <global-results>
+            <result name="login">/index.jsp</result>
+        </global-results>
+    
+    	<!-- 登录action -->
+        <action name="LoginAction_*" class="com.hlc.archivesmgmt.struts.action.LoginAction" method="{1}">
+            <result name="input">/index.jsp</result>
+            <result name="loginView">/index.jsp</result>
+            <result name="success">/WEB-INF/archival.jsp</result>
+        </action>
+        
+        <!-- 导航action -->
+        <action name="naviAction_*" class="com.hlc.archivesmgmt.struts.action.NavigateAction" method="{1}">
+            <result name="cate">/WEB-INF/archivalCategories.jsp</result>
+            <result name="archive">/WEB-INF/archival.jsp</result>
+            <result name="search">/WEB-INF/search.jsp</result>
+            <result name="logout">/index.jsp</result>
+        </action>
+        
+        
+        
+    </package>
+</struts>

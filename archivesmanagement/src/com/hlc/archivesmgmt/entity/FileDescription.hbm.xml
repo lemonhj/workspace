@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.hlc.archivesmgmt.entity">
+    <class name="FileDescription" table="busi_file_description" lazy="true">
+        <id name="fileId" column="fileId" type="integer">
+            <generator class="identity" />
+        </id>
+        <property name="fileName" column="fileName" type="string" length="50" />
+        <property name="personInCharge" column="personInCharge" type="string" length="20" />
+        <property name="fileCode" column="fileCode" type="string" length="20" />
+        <property name="archived" column="archived" type="integer"/>
+        <property name="code" column="code" type="string" length="30"/>
+        <property name="writtenDate" column="writtenDate" type="date"/>
+        <property name="securityLevel" column="securityLevel" type="integer"/>
+        <property name="registrationTime" column="registrationTime" type="date"/>
+        <property name="retentionPeriod" column="retentionPeriod" type="string" length="20" />
+        <property name="categoryCode" column="categoryCode" type="string" length="50" />
+        <property name="storeWay" column="storeWay" type="integer"/>
+        <property name="pages" column="pages" type="integer"/>
+        <property name="remarks" column="remarks" type="string" length="200" />
+        <many-to-one lazy="false" fetch="join" name="archive" column="archiveId" class="Archive" />
+        <set name="archivesStoreFileSet" lazy="false" inverse="true" cascade="all-delete-orphan">
+        	<key column="fileId" not-null="false" />   
+        	<one-to-many class="ArchivesStoreFile"/>
+        </set>
+    </class>
+</hibernate-mapping>

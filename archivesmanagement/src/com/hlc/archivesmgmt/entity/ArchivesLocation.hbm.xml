@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.hlc.archivesmgmt.entity">
+    <class name="com.hlc.archivesmgmt.entity.ArchivesLocation" table="busi_archives_location" lazy="true">
+        <id name="locationId" column="locationId" type="integer">
+            <generator class="identity" />
+        </id>
+        <property name="locationName" column="locationName" type="string" length="20" />
+        <property name="parentId" column="parentId" type="integer"/>
+        <property name="directoryType" column="directoryType" type="integer"/>
+        <property name="categoryView" column="categoryView" type="integer"/>
+        <property name="createTime" column="createTime" type="date"/>
+        <property name="locationStr" column="locationStr" type="string" length="100" />
+    </class>
+</hibernate-mapping>

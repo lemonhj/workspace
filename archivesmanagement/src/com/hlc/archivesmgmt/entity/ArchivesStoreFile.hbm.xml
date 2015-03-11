@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.hlc.archivesmgmt.entity">
+    <class name="ArchivesStoreFile" table="busi_archive_storefile" lazy="true">
+        <id name="storeFileId" column="storeFileId" type="integer">
+            <generator class="identity" />
+        </id>
+        <property name="fileName" column="fileName" type="string" length="50" />
+        <property name="filePath" column="filePath" type="string" length="200" />
+        <property name="uploadTime" column="uploadTime" type="date"/>
+        <many-to-one lazy="false" fetch="join" name="fileDescription" column="fileId" class="FileDescription" />
+    </class>
+</hibernate-mapping>
